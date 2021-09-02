@@ -28,6 +28,8 @@ sp-staking = { version = "3.0.0", default-features = false, git = "https://githu
 beefy-primitives = { version = "0.1.0", git = "https://github.com/octopus-network/grandpa-bridge-gadget", branch = "dev", default-features = false }
 pallet-beefy = { version = "0.1.0", git = "https://github.com/octopus-network/grandpa-bridge-gadget", branch = "dev", default-features = false }
 pallet-octopus-appchain = { default-features = false, git = "https://github.com/octopus-network/pallet-octopus-appchain", branch = "master" }
+pallet-nicks = {version = "3.0.0",default-features = false}
+
 
 [dependencies.pallet-template]
 default-features = false
@@ -252,4 +254,5 @@ std = [
     'beefy-primitives/std',
     'pallet-beefy/std',
     'pallet-octopus-appchain/std',
+    'pallet-nicks/std',
 ]

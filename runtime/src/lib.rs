@@ -57,6 +57,7 @@ use beefy_primitives::{crypto::AuthorityId as BeefyId, ValidatorSet};
 use frame_support::PalletId;
 use sp_runtime::traits::ConvertInto;
 use sp_runtime::traits::Keccak256;
+use frame_support::{dispatch::DispatchResult, pallet_prelude::*, traits::{OnUnbalanced, ReservableCurrency}};
 
 /// Import the template pallet.
 pub use pallet_template;
@@ -118,7 +119,7 @@ pub mod opaque {
 #[sp_version::runtime_version]
 pub const VERSION: RuntimeVersion = RuntimeVersion {
 	spec_name: create_runtime_str!("appchain"),
-	impl_name: create_runtime_str!("appchain-barnacle"),
+	impl_name: create_runtime_str!("appchain-privacynote"),
 	authoring_version: 1,
 	// The version of the runtime specification. A full node will not attempt to use its native
 	//   runtime in substitute for the on-chain Wasm runtime unless all of `spec_name`,
@@ -332,6 +333,10 @@ impl pallet_balances::Config for Runtime {
 	type AccountStore = System;
 	type WeightInfo = pallet_balances::weights::SubstrateWeight<Runtime>;
 }
+
+
+
+
 
 parameter_types! {
 	pub const TransactionByteFee: Balance = 10 * MILLICENTS;
@@ -615,9 +620,67 @@ impl pallet_sudo::Config for Runtime {
 	type Call = Call;
 }
 
+
+/// Add this code block to your template for Nicks:
+parameter_types! {
+    // Choose a fee that incentivizes desireable behavior.
+    pub const NickReservationFee: u128 = 100;
+    pub const MinNickLength: usize = 8;
+    // Maximum bounds on storage are important to secure your chain.
+    pub const MaxNickLength: usize = 32;
+}
+
+// impl pallet_nicks::Config for Runtime {
+//     // The Balances pallet implements the ReservableCurrency trait.
+//     // `Balances` is defined in `construct_runtimes!` macro. See below.
+//     // https://substrate.dev/rustdocs/latest/pallet_balances/index.html#implementations-2
+//     type Currency = Balances;
+
+//     // Use the NickReservationFee from the parameter_types block.
+//     type ReservationFee = NickReservationFee;
+
+//     // No action is taken when deposits are forfeited.
+//     type Slashed = ();
+
+//     // Configure the FRAME System Root origin as the Nick pallet admin.
+//     // https://substrate.dev/rustdocs/latest/frame_system/enum.RawOrigin.html#variant.Root
+//     type ForceOrigin = frame_system::EnsureRoot<AccountId>;
+
+//     // Use the MinNickLength from the parameter_types block.
+//     type MinLength = MinNickLength;
+
+//     // Use the MaxNickLength from the parameter_types block.
+//     type MaxLength = MaxNickLength;
+
+//     // The ubiquitous event type.
+//     type Event = Event;
+// }
+
 /// Configure the pallet-template in pallets/template.
 impl pallet_template::Config for Runtime {
+    // The Balances pallet implements the ReservableCurrency trait.
+    // `Balances` is defined in `construct_runtimes!` macro. See below.
+    // https://substrate.dev/rustdocs/latest/pallet_balances/index.html#implementations-2
+    type Currency = Balances;
+
+    // Use the NickReservationFee from the parameter_types block.
+    type ReservationFee = NickReservationFee;
+
+    // No action is taken when deposits are forfeited.
+    type Slashed = ();
+
+    // Configure the FRAME System Root origin as the Nick pallet admin.
+    // https://substrate.dev/rustdocs/latest/frame_system/enum.RawOrigin.html#variant.Root
+    type ForceOrigin = frame_system::EnsureRoot<AccountId>;
+
+    // // Use the MinNickLength from the parameter_types block.
+    // type MinLength = MinNickLength;
+
+    // // Use the MaxNickLength from the parameter_types block.
+    // type MaxLength = MaxNickLength;
+
 	type Event = Event;
+
 }
 
 // Create the runtime by composing the FRAME pallets that were previously configured.

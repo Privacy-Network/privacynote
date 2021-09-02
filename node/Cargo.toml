@@ -1,12 +1,12 @@
 [package]
-authors = ['Octopus Network <hi@oct.network>']
-description = 'A minimal template for octopus appchain.'
+authors = ['Privacy Network <hi@pn.network>']
+description = 'appchain based on octopus appchain.'
 edition = '2018'
-homepage = 'https://oct.network/'
+homepage = 'https://pn.network/'
 license = 'Apache-2.0'
-name = 'appchain-barnacle'
+name = 'appchain-privacynote'
 publish = false
-repository = 'https://github.com/octopus-network/barnacle/'
+repository = 'https://github.com/Privacy-Network/privacynote/'
 version = '3.0.0-monthly-2021-08'
 build = 'build.rs'
 
@@ -14,7 +14,7 @@ build = 'build.rs'
 targets = ['x86_64-unknown-linux-gnu']
 
 [[bin]]
-name = 'appchain-barnacle'
+name = 'appchain-privacynote'
 [build-dependencies.substrate-build-script-utils]
 git = 'https://github.com/paritytech/substrate.git'
 tag = 'monthly-2021-08'
