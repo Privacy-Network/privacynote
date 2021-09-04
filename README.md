@@ -1,6 +1,6 @@
 # Octopus Appchain Template
 
-# TODO
+# complile
 ```
 $ cargo build
 $ ./target/debug/appchain-privacynote purge-chain --dev
